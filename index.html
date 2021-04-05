@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <main>
+        <div class="container">
+            <span id="message"></span>
+            
+            <form method="post" action="#" id="form" class="form">
+                <div class="form__input">
+                    <label for="name">Nombre &#x2a;</label>
+                    <input type="text" id="name" maxlength="20" required placeholder="ej: Patricio" name="name">
+                </div>
+    
+                <div class="form__input">
+                    <label for="lastname">Apellidos &#x2a;</label>
+                    <input type="text" id="lastname" maxlength="20" required placeholder="ej: Barra Muñoz">
+                </div>
+    
+                <div class="form__input">
+                    <label for="rut">Rut &#x2a;</label>
+                    <input type="text" id="rut" maxlength="10" required placeholder="ej: 12333444-5" name="rut">
+                </div>
+                <span id="form__invalid-input" class="form__invalid-input"></span>
+    
+                <div class="form__input">
+                    <label for="email">Email &#x2a;</label>
+                    <input type="email" name="" id="email" required placeholder="ej: manuelinbombin@gmail.com">
+                </div>
+
+                <div class="form__input">
+                    <label for="phone">Teléfono &#x2a;<br>(+56)</label>
+                    <input type="text" name="phone" id="phone" maxlength="9" required placeholder="ej: 984637880" pattern="[0-9]{9}">
+                </div>
+                <span id="form__invalid-input" class="form__invalid-input"></span>
+                
+                <div class="languages">
+                    <label for="languages"><span>Selecciona uno o más lenguajes de programación de su interés &#x2a;</span></label><br><br>
+                    <input type="checkbox" id="python" name="languages" value="Python">
+                    <label for="python">Python</label>
+        
+                    <input type="checkbox" id="java" name="languages" value="Java">
+                    <label for="java">Java</label>
+        
+                    <input type="checkbox" id="typescript" name="languages" value="TypeScript">
+                    <label for="typescript">TypeScript</label>
+        
+                    <input type="checkbox" id="php" name="languages" value="PHP">
+                    <label for="php">PHP</label>
+        
+                    <input type="checkbox" id="c" name="languages" value="C">
+                    <label for="c">C</label>
+        
+                    <input type="checkbox" id="cSharp" name="languages" value="C#">
+                    <label for="cSharp">C#</label>
+        
+                    <input type="checkbox" id="cPlus" name="languages" value="C++">
+                    <label for="cPlus">C++</label>
+                </div>
+                <span id="form__invalid-languages"></span>
+    
+                <div class="form__input form__input--range">
+                    <label for="level">Nivel de programación</label><br>
+                    <input class="range" type="range" id="level" min="0" max="100" name="level"><br>
+                    <span id="range-value" class="form__level-range"></span>
+                </div>
+
+                <div class="form__experience">
+        
+                    <label for="years"><span>Años de experiencia laboral &#x2a;</span></label><br><br>
+        
+                    <input type="radio" id="year1" name="years" required>
+                    <label for="year1">1</label>
+        
+                    <input type="radio" id="year2" name="years">
+                    <label for="year2">2</label>
+        
+                    <input type="radio" id="year3" name="years">
+                    <label for="year4">3</label>
+        
+                    <input type="radio" id="year4" name="years">
+                    <label for="year4">4</label>
+        
+                    <input type="radio" id="year5" name="years">
+                    <label for="year5">5</label>
+                </div>
+
+                <div class="form__input--description">
+                    <label for="description"><span>Descripción Personal &#x2a;</span></label>
+                    <textarea name="" id="description" maxlength="300" required rows="5"></textarea>
+                </div>
+       
+                <button type="submit" id="enviar">Enviar Información</button>
+                <button type="click" id="limpiar">Limpiar Datos</button>
+            </form>
+        </div>
+    </main>
+    
+    <script src="./dist/app.js"></script>
+</body>
+</html>
