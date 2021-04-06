@@ -1,33 +1,48 @@
 let form = <HTMLFormElement> document.getElementById("form");
-// let message: any = document.getElementById("message");
 let message = <HTMLSpanElement> document.getElementById("message");
-
-// let btn: any = document.getElementById("limpiar");
+let main = <HTMLSpanElement> document.getElementById("main");
+let container = <HTMLSpanElement> document.getElementById("container");
 let btn = <HTMLButtonElement> document.getElementById("limpiar");
-
-// let level: any = document.getElementById("level");
+let btnMode = <HTMLButtonElement> document.getElementById("btn-mode");
 let level = <HTMLInputElement> document.getElementById("level");
-// let output: any = document.getElementById("range-value");
 let output = <HTMLSpanElement> document.getElementById("range-value");
-
-const input = <HTMLSpanElement> document.getElementById("form__invalid-input");
+const invalidRut = <HTMLSpanElement> document.getElementById("form__invalid-rut");
+const invalidName = <HTMLSpanElement> document.getElementById("form__invalid-name");
+const invalidLastName = <HTMLSpanElement> document.getElementById("form__invalid-lastName");
+const invalidPhone = <HTMLSpanElement> document.getElementById("form__invalid-phone");
+const invalidText = <HTMLSpanElement> document.getElementById("form__invalid-text");
+const invalidEmail = <HTMLSpanElement> document.getElementById("form__invalid-email");
 const checkboxLanguages = <HTMLSpanElement> document.getElementById("form__invalid-languages");
+const invalidYears= <HTMLSpanElement> document.getElementById("form__invalid-years");
+const description = <HTMLTextAreaElement> document.getElementById("description");
+const phone = <HTMLButtonElement> document.getElementById("phone");
+const email = <HTMLInputElement> form.elements.namedItem("email");
 
 output.innerHTML = level.value;
-
 level.oninput = function() {
-    // output.innerHTML = this.value;
     output.innerHTML = level.value;
 }
 
-btn.addEventListener("click", limpiarDatos);
+phone.addEventListener("input", (event: Event) => {
+    phone.oninput = function() {
+        if (phone.value.length > 9) phone.value = phone.value.slice(0, 9); 
+    }
+});
 
-function limpiarDatos(event: Event) {
+btn.addEventListener("click", cleanData);
+
+function cleanData(event: Event) {
     event.preventDefault();
     form.reset();
     output.innerHTML = "50";
-    input.style.display = "none";
+    invalidRut.style.display = "none";
     checkboxLanguages.style.display = "none";
+    invalidName.style.display = "none";
+    invalidLastName.style.display = "none";
+    invalidPhone.style.display = "none";
+    invalidText.style.display = "none";
+    invalidYears.style.display = "none";
+    invalidEmail.style.display = "none";
 }
 
 form.addEventListener("submit", (event: Event) => {
@@ -35,41 +50,45 @@ form.addEventListener("submit", (event: Event) => {
     event.preventDefault();
 
     const rut = <HTMLInputElement> form.elements.namedItem("rut");
-    // const name = <HTMLInputElement> form.elements.namedItem("name");
-    // const lastname = <HTMLInputElement> form.elements.namedItem("lastname");
-    // const email = <HTMLInputElement> form.elements.namedItem("email");
-    // const phone = <HTMLInputElement> form.elements.namedItem("phone");
+    const name = <HTMLInputElement> form.elements.namedItem("name");
+    const lastname = <HTMLInputElement> form.elements.namedItem("lastname");
+    const phone = <HTMLInputElement> form.elements.namedItem("phone");
     let selectedLanguages: string[] = [];
     const languages = <RadioNodeList> form.elements.namedItem("languages");
-    // const input = <HTMLSpanElement> document.getElementById("form__invalid-input");
-    // const checkboxLanguages = <HTMLSpanElement> document.getElementById("form__invalid-languages");
-
+    const years = <RadioNodeList> form.elements.namedItem("years");
+    
     languages.forEach((language: Node) => {
         const checkbox = <HTMLInputElement>language;
         if (checkbox.checked) selectedLanguages.push(checkbox.value);
     });
-    
-    if (validarRut(rut.value) === "true" && selectedLanguages.length > 0) {
+
+    if (validarRut(rut.value) === "true" && selectedLanguages.length > 0 && name.value.length > 0 && lastname.value.length > 0 && validarTelefono(phone.value) && description.value.length > 0 && years.value) {
         form.style.display = "none";
         message.innerHTML = '<h2>Hemos recibido sus datos, pronto estaremos en contacto</h2>';
         message.style.display ="block";
         return;
     }
 
-    if ( selectedLanguages.length < 1) {
-        checkboxLanguages.innerHTML = "Seleccione al menos un lenguage";
-        checkboxLanguages.style.display = "block";
+    validateField(selectedLanguages, "Seleccione al menos un lenguage", checkboxLanguages);
+    validateField(name.value, "Complete el campo Nombre", invalidName);
+    validateField(lastname.value, "Complete el campo Apellidos", invalidLastName);
+    validateField(description.value, "Debe completar este campo", invalidText);
+    validateField(years.value, "Seleccione un año", invalidYears);
+    validateEmail(email.value, "Email inválido", invalidEmail);
+
+    if (!validarTelefono(phone.value)) {
+        invalidPhone.innerHTML = "Número inválido, formato 9xxxxxxxx";
+        invalidPhone.style.display = "block";
     } else {
-        checkboxLanguages.style.display = "none";
+        invalidPhone.style.display = "none";
     }
 
     if (validarRut(rut.value) !== "true") {
-        input.style.display = "block";
-        input.innerHTML = `${validarRut(rut.value)}`;
+        invalidRut.innerHTML = `${validarRut(rut.value)}`;
+        invalidRut.style.display = "block";
     } else {
-        input.style.display = "none";
+        invalidRut.style.display = "none";
     }
-    
 });
 
 function validarRut(rut: string): string {
@@ -113,9 +132,26 @@ function calcularDigitoVerificador(numeroRut: string): string {
 }
 
 function validarTelefono(telefono: string): boolean {
-    // if (!telefono.match(/^[0-9]+$/) || !(telefono.length === 9) || !(telefono[0] === "9")) return false;
-    // validar que sean solo digitos
-    // if (!NaN())
-    if (!(telefono[0] === "9")) return false;
+    if (!telefono.match(/^[0-9]+$/) || !(telefono.length === 9) || !(telefono[0] === "9") || !(telefono[0] === "9")) return false;
+
     return true;
+}
+
+function validateField(value: string | string[], message: string, element: HTMLSpanElement) {
+    if ( value.length < 1) {
+        element.innerHTML = message;
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
+
+function validateEmail(email: string, message: string, element: HTMLSpanElement) {
+    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.match(pattern)) {
+        element.innerHTML = message;
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
 }

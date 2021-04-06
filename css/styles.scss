@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
+$main-bg: #fef6ae;
 $form-bg: #f8f4e5;
 $form-shadow: #ffa580;
 $form-primary-highlight: #95a4ff;
 $form-secondary-highlight: #ffc8ff;
 $txt-primary: #6e6d77;
+$txt-error: #f05945;
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -12,12 +14,15 @@ $txt-primary: #6e6d77;
   color: $txt-primary;
 }
 
+body {
+  background-color: $main-bg;
+}
+
 main {
   height: 100vh;
+  // height: 80vh;
   width: 100%;
-  background-color: rgba(216,171,151,255);
-  background-color: #f8f4e5;
-  background-color: #fef6ae;
+  background-color: $main-bg;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,24 +31,18 @@ main {
 
 .container {
   width: 90%;
-  // max-width: 500px;
   max-width: 31.25em;
   margin: 0 auto;
-  // padding: 10px;
   padding: .625em;
   border-radius: 4px;
-  // margin-bottom: 20px;
   margin-bottom: 1.25em;
-  background-color: #f8c7c3;
   background-color: #f8f4e5;
   border: 2px solid rgba(0,0,0,1);
-  box-shadow: 15px 15px 1px $form-shadow, 15px 15px 1px 2px rgba(0,0,0,1);
   box-shadow: 15px 15px 1px $form-primary-highlight, 15px 15px 1px 2px rgba(0,0,0,1);
 }
 
 .form__input {
   width: 100%;
-  // margin-top: 15px;
   margin-top: .9375em;
   font-weight: 500;
   display: flex;
@@ -53,11 +52,9 @@ main {
 
 .form__input input {
   width: 80%;
-  // padding: 10px;
   padding: .625em;
   border: none;
   border-bottom: 3px solid $form-primary-highlight;
-  // margin-top: 4px;
   margin-top: .25em;
   outline: none;
   background: $form-bg;
@@ -68,7 +65,6 @@ main {
 }
 
 .form__input--description {
-  // margin-top: 20px;
   margin-top: 1.25em;
 }
 
@@ -109,7 +105,6 @@ textarea {
 }
 
 .form__experience {
-  // margin-top: 20px;
   margin-top: 1.25em;
 }
 
@@ -124,17 +119,13 @@ textarea {
 button {
   border: none;
   outline: none;
-  // padding: 5px;
   padding: .3125em;
-  background-color: #807083;
   background-color: $form-shadow;
   color: #2A293E;
   font-weight: 300;
-  // margin-top: 4px;
   margin-top: .25em;
   outline: none;
   border: 1px solid rgba(0,0,0,1);
-  // letter-spacing: 2px;
   letter-spacing: .125em;
 }
 
@@ -151,7 +142,6 @@ button:hover {
 input[type=range] {
   height: 30px;
   -webkit-appearance: none;
-  // margin: 10px 0;
   margin: .625em 0;
   width: 100%;
 }
@@ -244,17 +234,9 @@ input[type=range]:focus::-ms-fill-upper {
   display: none;
 }
 
-#form__invalid-input {
+.form__input-error {
   display: none;
-  color: red;
-  width: 100%;
-  text-align: center;
-  margin-top: .7em;
-  font-size: .8rem;
-}
-#form__invalid-languages {
-  display: none;
-  color: red;
+  color: $txt-error;
   width: 100%;
   text-align: center;
   margin-top: .7em;

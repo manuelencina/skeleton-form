@@ -1,63 +1,86 @@
 "use strict";
 var form = document.getElementById("form");
-// let message: any = document.getElementById("message");
 var message = document.getElementById("message");
-// let btn: any = document.getElementById("limpiar");
+var main = document.getElementById("main");
+var container = document.getElementById("container");
 var btn = document.getElementById("limpiar");
-// let level: any = document.getElementById("level");
+var btnMode = document.getElementById("btn-mode");
 var level = document.getElementById("level");
-// let output: any = document.getElementById("range-value");
 var output = document.getElementById("range-value");
-var input = document.getElementById("form__invalid-input");
+var invalidRut = document.getElementById("form__invalid-rut");
+var invalidName = document.getElementById("form__invalid-name");
+var invalidLastName = document.getElementById("form__invalid-lastName");
+var invalidPhone = document.getElementById("form__invalid-phone");
+var invalidText = document.getElementById("form__invalid-text");
+var invalidEmail = document.getElementById("form__invalid-email");
 var checkboxLanguages = document.getElementById("form__invalid-languages");
+var invalidYears = document.getElementById("form__invalid-years");
+var description = document.getElementById("description");
+var phone = document.getElementById("phone");
+var email = form.elements.namedItem("email");
 output.innerHTML = level.value;
 level.oninput = function () {
-    // output.innerHTML = this.value;
     output.innerHTML = level.value;
 };
-btn.addEventListener("click", limpiarDatos);
-function limpiarDatos(event) {
+phone.addEventListener("input", function (event) {
+    phone.oninput = function () {
+        if (phone.value.length > 9)
+            phone.value = phone.value.slice(0, 9);
+    };
+});
+btn.addEventListener("click", cleanData);
+function cleanData(event) {
     event.preventDefault();
     form.reset();
     output.innerHTML = "50";
-    input.style.display = "none";
+    invalidRut.style.display = "none";
     checkboxLanguages.style.display = "none";
+    invalidName.style.display = "none";
+    invalidLastName.style.display = "none";
+    invalidPhone.style.display = "none";
+    invalidText.style.display = "none";
+    invalidYears.style.display = "none";
+    invalidEmail.style.display = "none";
 }
 form.addEventListener("submit", function (event) {
     event.preventDefault();
     var rut = form.elements.namedItem("rut");
-    // const name = <HTMLInputElement> form.elements.namedItem("name");
-    // const lastname = <HTMLInputElement> form.elements.namedItem("lastname");
-    // const email = <HTMLInputElement> form.elements.namedItem("email");
-    // const phone = <HTMLInputElement> form.elements.namedItem("phone");
+    var name = form.elements.namedItem("name");
+    var lastname = form.elements.namedItem("lastname");
+    var phone = form.elements.namedItem("phone");
     var selectedLanguages = [];
     var languages = form.elements.namedItem("languages");
-    // const input = <HTMLSpanElement> document.getElementById("form__invalid-input");
-    // const checkboxLanguages = <HTMLSpanElement> document.getElementById("form__invalid-languages");
+    var years = form.elements.namedItem("years");
     languages.forEach(function (language) {
         var checkbox = language;
         if (checkbox.checked)
             selectedLanguages.push(checkbox.value);
     });
-    if (validarRut(rut.value) === "true" && selectedLanguages.length > 0) {
+    if (validarRut(rut.value) === "true" && selectedLanguages.length > 0 && name.value.length > 0 && lastname.value.length > 0 && validarTelefono(phone.value) && description.value.length > 0 && years.value) {
         form.style.display = "none";
         message.innerHTML = '<h2>Hemos recibido sus datos, pronto estaremos en contacto</h2>';
         message.style.display = "block";
         return;
     }
-    if (selectedLanguages.length < 1) {
-        checkboxLanguages.innerHTML = "Seleccione al menos un lenguage";
-        checkboxLanguages.style.display = "block";
+    validateField(selectedLanguages, "Seleccione al menos un lenguage", checkboxLanguages);
+    validateField(name.value, "Complete el campo Nombre", invalidName);
+    validateField(lastname.value, "Complete el campo Apellidos", invalidLastName);
+    validateField(description.value, "Debe completar este campo", invalidText);
+    validateField(years.value, "Seleccione un año", invalidYears);
+    validateEmail(email.value, "Email inválido", invalidEmail);
+    if (!validarTelefono(phone.value)) {
+        invalidPhone.innerHTML = "Número inválido, formato 9xxxxxxxx";
+        invalidPhone.style.display = "block";
     }
     else {
-        checkboxLanguages.style.display = "none";
+        invalidPhone.style.display = "none";
     }
     if (validarRut(rut.value) !== "true") {
-        input.style.display = "block";
-        input.innerHTML = "" + validarRut(rut.value);
+        invalidRut.innerHTML = "" + validarRut(rut.value);
+        invalidRut.style.display = "block";
     }
     else {
-        input.style.display = "none";
+        invalidRut.style.display = "none";
     }
 });
 function validarRut(rut) {
@@ -91,10 +114,26 @@ function calcularDigitoVerificador(numeroRut) {
     return "" + resultado;
 }
 function validarTelefono(telefono) {
-    // if (!telefono.match(/^[0-9]+$/) || !(telefono.length === 9) || !(telefono[0] === "9")) return false;
-    // validar que sean solo digitos
-    // if (!NaN())
-    if (!(telefono[0] === "9"))
+    if (!telefono.match(/^[0-9]+$/) || !(telefono.length === 9) || !(telefono[0] === "9") || !(telefono[0] === "9"))
         return false;
     return true;
+}
+function validateField(value, message, element) {
+    if (value.length < 1) {
+        element.innerHTML = message;
+        element.style.display = "block";
+    }
+    else {
+        element.style.display = "none";
+    }
+}
+function validateEmail(email, message, element) {
+    var pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.match(pattern)) {
+        element.innerHTML = message;
+        element.style.display = "block";
+    }
+    else {
+        element.style.display = "none";
+    }
 }

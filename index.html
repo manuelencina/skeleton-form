@@ -9,37 +9,39 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <main>
-        <div class="container">
+    <main id="main">
+        <div class="container" id="container">
             <span id="message"></span>
-            
             <form method="post" action="#" id="form" class="form">
                 <div class="form__input">
                     <label for="name">Nombre &#x2a;</label>
-                    <input type="text" id="name" maxlength="20" required placeholder="ej: Patricio" name="name">
+                    <input type="text" id="name" placeholder="ej: Patricio" name="name">
                 </div>
+                <span id="form__invalid-name" class="form__input-error"></span>
     
                 <div class="form__input">
                     <label for="lastname">Apellidos &#x2a;</label>
-                    <input type="text" id="lastname" maxlength="20" required placeholder="ej: Barra Muñoz">
+                    <input type="text" id="lastname" placeholder="ej: Barra Muñoz">
                 </div>
+                <span id="form__invalid-lastName" class="form__input-error"></span>
     
                 <div class="form__input">
                     <label for="rut">Rut &#x2a;</label>
-                    <input type="text" id="rut" maxlength="10" required placeholder="ej: 12333444-5" name="rut">
+                    <input type="text" id="rut" placeholder="ej: 12333444-5" name="rut">
                 </div>
-                <span id="form__invalid-input" class="form__invalid-input"></span>
+                <span id="form__invalid-rut" class="form__input-error"></span>
     
                 <div class="form__input">
                     <label for="email">Email &#x2a;</label>
-                    <input type="email" name="" id="email" required placeholder="ej: manuelinbombin@gmail.com">
+                    <input type="text" name="" id="email" placeholder="ej: manuelinbombin@gmail.com">
                 </div>
+                <span id="form__invalid-email" class="form__input-error"></span>
 
                 <div class="form__input">
                     <label for="phone">Teléfono &#x2a;<br>(+56)</label>
-                    <input type="text" name="phone" id="phone" maxlength="9" required placeholder="ej: 984637880" pattern="[0-9]{9}">
+                    <input type="text" name="phone" id="phone" placeholder="ej: 984637880">
                 </div>
-                <span id="form__invalid-input" class="form__invalid-input"></span>
+                <span id="form__invalid-phone" class="form__input-error"></span>
                 
                 <div class="languages">
                     <label for="languages"><span>Selecciona uno o más lenguajes de programación de su interés &#x2a;</span></label><br><br>
@@ -64,7 +66,7 @@
                     <input type="checkbox" id="cPlus" name="languages" value="C++">
                     <label for="cPlus">C++</label>
                 </div>
-                <span id="form__invalid-languages"></span>
+                <span id="form__invalid-languages" class="form__input-error"></span>
     
                 <div class="form__input form__input--range">
                     <label for="level">Nivel de programación</label><br>
@@ -72,11 +74,11 @@
                     <span id="range-value" class="form__level-range"></span>
                 </div>
 
-                <div class="form__experience">
+                <div class="years">
         
                     <label for="years"><span>Años de experiencia laboral &#x2a;</span></label><br><br>
         
-                    <input type="radio" id="year1" name="years" required>
+                    <input type="radio" id="year1" name="years">
                     <label for="year1">1</label>
         
                     <input type="radio" id="year2" name="years">
@@ -91,14 +93,16 @@
                     <input type="radio" id="year5" name="years">
                     <label for="year5">5</label>
                 </div>
+                <span id="form__invalid-years" class="form__input-error"></span>
 
                 <div class="form__input--description">
-                    <label for="description"><span>Descripción Personal &#x2a;</span></label>
-                    <textarea name="" id="description" maxlength="300" required rows="5"></textarea>
+                    <label for="description"><span>Descripción Personal (máximo 300 caracteres) &#x2a;</span></label>
+                    <textarea name="" id="description" maxlength="300" rows="5"></textarea>
                 </div>
+                <span id="form__invalid-text" class="form__input-error"></span>
        
-                <button type="submit" id="enviar">Enviar Información</button>
-                <button type="click" id="limpiar">Limpiar Datos</button>
+                <button type="submit" id="enviar" class="btn">Enviar Información</button>
+                <button type="click" id="limpiar" class="btn">Limpiar Datos</button>
             </form>
         </div>
     </main>
